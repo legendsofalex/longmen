@@ -47,6 +47,11 @@ in the case of randomised data sets these were generated in R, exported,
 combined, then imported to the length/width file. This is not a 
 stream-lined or convenient approach but was just what was done.
 
+PRIWIS refers to a specific sample collection in which media was
+re-inoculated with induced cells and incubated for 21 hours when
+samples were collected for microscopy (post re-inoculation with
+induced sample)
+
 files are titled:
 
 they are headered with shorthand for strain corrosponding minutes 
