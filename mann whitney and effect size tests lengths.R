@@ -147,6 +147,18 @@ print(oarui$p.value)
 #################################
 cd<-cliff.delta(oar90ui,oar300ui)
 print(cd)
+######################################
+#######300iv300 ui oar grow up 2######
+######################################
+oar2ui<-na.omit(alldata$oar300ui2)
+oar2i<-na.omit(alldata$oar300i2)
+oarui<-wilcox.test(alldata$"oar300ui2",alldata$"oar300i2",
+                   alternative = "two.sided", paired = FALSE,
+                   exact = FALSE, correct = FALSE)
+print(oarui$p.value)
+###############################
+cd<-cliff.delta(oar2i,oar2ui)
+print(cd)
 ##################################################################################
 ###################### Brauns lipoprotein deficient grow up 1 ####################
 ##################################################################################
@@ -363,6 +375,49 @@ print(lppuir$p.value)
 #################################
 cd<-cliff.delta(lpp90uir,lpp300uir)
 print(cd)
+#########################
+#######300 ui vs PRIWIS lpp#####
+#########################
+lppuir<-wilcox.test(alldata$"lpppriwis",alldata$"lpp300uir",
+                    alternative = "two.sided", paired = FALSE,
+                    exact = FALSE, correct = FALSE)
+print(lppuir$p.value)
+#################################
+cd<-cliff.delta(lpp90uir,lpp300uir)
+print(cd)
+#########################
+#######300 i vs PRIWIS lpp#####
+#########################
+lppuir<-wilcox.test(alldata$"lpppriwis",alldata$"lpp300ir",
+                    alternative = "two.sided", paired = FALSE,
+                    exact = FALSE, correct = FALSE)
+print(lppuir$p.value)
+#########################
+#######300 ui vs PRIWIS lpp#####
+#########################
+lppuir<-wilcox.test(alldata$"lpppriwis",alldata$"lpp300uir",
+                    alternative = "two.sided", paired = FALSE,
+                    exact = FALSE, correct = FALSE)
+print(lppuir$p.value)
+#################################
+lpppriwis<-na.omit(alldata$lpppriwis)
+lpp300uir<-na.omit(alldata$lpp300uir)
+
+cd<-cliff.delta(lpppriwis,lpp300uir)
+print(cd)
+#########################
+#######300 i vs PRIWIS lpp#####
+#########################
+lppir<-wilcox.test(alldata$"lpppriwis",alldata$"lpp300ir",
+                   alternative = "two.sided", paired = FALSE,
+                   exact = FALSE, correct = FALSE)
+print(lppir$p.value)
+#################################
+lpppriwis<-na.omit(alldata$lpppriwis)
+lpp300ir<-na.omit(alldata$lpp300ir)
+cd<-cliff.delta(lpppriwis,lpp300ir)
+print(cd)
+########################
 #####################################################################################
 #####################################################################################
 ### BW25113 randomised grow up 1 and 2###############################################
@@ -376,6 +431,7 @@ bw300ui2<-na.omit(alldata$bw300ui2)
 bw300i2<-na.omit(alldata$bw300i2)
 bw100ui2<-na.omit(alldata$bw100ui2)
 bw100i2<-na.omit(alldata$bw100i2)
+bwpriwis<-na.omit(alldata$bwpriwis)
 #######################
 #######330v330 oar#####
 #######################
@@ -420,6 +476,26 @@ bwui<-wilcox.test(alldata$"bw120uir",alldata$"bw330uir",
 print(bwui$p.value)
 ################################
 cd<-cliff.delta(bw100ui,bw300ui)
+print(cd)
+#########################
+#######PRIWISv330 ui bw#####
+#########################
+bwui<-wilcox.test(alldata$"bwpriwis",alldata$"bw330uir",
+                  alternative = "two.sided", paired = FALSE,
+                  exact = FALSE, correct = FALSE)
+print(bwui$p.value)
+################################
+cd<-cliff.delta(bwpriwis,bw300ui)
+print(cd)
+#########################
+#######PRIWISv330 i bw#####
+#########################
+bwui<-wilcox.test(alldata$"bwpriwis",alldata$"bw330ir",
+                  alternative = "two.sided", paired = FALSE,
+                  exact = FALSE, correct = FALSE)
+print(bwui$p.value)
+################################
+cd<-cliff.delta(bwpriwis,bw300i)
 print(cd)
 ######################################################################################
 ######################################################################################

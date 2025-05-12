@@ -33,6 +33,8 @@ lpp300ui3<-na.omit(alldata$lpp300ui3)
 lpp300i3<-na.omit(alldata$lpp300i3)
 lpp90ui3<-na.omit(alldata$lpp90ui3)
 lpp90i3<-na.omit(alldata$lpp90i3)
+lpppriwis<-na.omit(alldata$lpppriwis)
+bwpriwis<-na.omit(all$databwpriwis)
 data<- alldata
 ##################################################################################
 ##############################shapiro test########################################
@@ -57,15 +59,6 @@ shapiro.test(alldata$lpp300i3)# not normal
 shapiro.test(alldata$lpp300ui3)#not normal
 shapiro.test(alldata$lpp90i3)#not normal
 shapiro.test(alldata$lpp90ui3)#not normal
-##################################################################################
-#################################variance#########################################
-##################################################################################
+shapiro.test(alldata$lpppriwis)#not normal, not normal
+shapiro.test(alldata$bwpriwis)#not normal, not normal
 
-var(rfac300i)#big
-var(rfac300ui)#small
-var(rfac120i)#med
-var(rfac120ui)#med
-var(oar300i)#med
-var(oar300ui)#big
-var(oar90i)#med
-var(oar90ui)#med

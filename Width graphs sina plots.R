@@ -351,21 +351,23 @@ ggsave("LPP3_Violin_plot_width.png", plot=lpp3, width=10,height= 10)
 ###################################################################################################################################
 
 data_long <- alldata %>%
-  pivot_longer(cols = c(lpp300ir, lpp300uir, lpp90ir, lpp90uir),
+  pivot_longer(cols = c(lpp300ir, lpp300uir, lpp90ir, lpp90uir,lpppriwis),
                names_to = "Condition",
                values_to = "Width")
 
 data_long$Condition <- factor(data_long$Condition,
-                              levels = c("lpp300ir", "lpp300uir", "lpp90ir", "lpp90uir"),
-                              labels = c("210 min +\n 0.1 mM IPTG", "210 min", "0 min +\n 0.1 mM IPTG", "0 min"))
+                              levels = c("lpppriwis","lpp300ir", "lpp300uir", "lpp90ir", "lpp90uir"),
+                              labels = c("PRIWIS","210 min +\n 0.1 mM IPTG", "210 min", "0 min +\n 0.1 mM IPTG", "0 min"))
 
 
 custo_colors <- c("210 min +\n 0.1 mM IPTG" = "#00a393",
                   "210 min"        = "#de0286",
+                  "PRIWIS" = "#6c32ad",
                   "0 min +\n 0.1 mM IPTG"  = "#00a393",
                   "0 min"         = "#de0286")
 custocolors <- c("210 min +\n 0.1 mM IPTG" = "#007367",
                  "210 min"        = "#8a0053",
+                 "PRIWIS"="#400d7a",
                  "0 min +\n 0.1 mM IPTG"  = "#007367",
                  "0 min"         = "#8a0053")
 
@@ -379,7 +381,7 @@ lppr <- ggplot(data_long, aes(x = Condition, y = Width, fill = Condition, color=
   stat_summary(fun = mean, geom = "point", shape = 21, size = 5, fill = "black") +
   scale_fill_manual(values = custocolors) +
   scale_color_manual(values=custo_colors)+
-  coord_cartesian(ylim=c(0,2.6))+
+  coord_cartesian(ylim=c(0,2.8))+
   
   theme_bw(base_size = 24) +
   theme(legend.position = "none",
@@ -397,10 +399,10 @@ lppr <- ggplot(data_long, aes(x = Condition, y = Width, fill = Condition, color=
   labs(title = expression(bold(bolditalic("∆lpp + secA E. coli")~" widths")),
        x = "   ",
        y ="Width (µm)")+
-  geom_signif(comparisons = list(c("210 min +\n 0.1 mM IPTG","210 min"),c("210 min +\n 0.1 mM IPTG","0 min +\n 0.1 mM IPTG"), 
+  geom_signif(comparisons = list(c("PRIWIS","210 min"),c("210 min +\n 0.1 mM IPTG","PRIWIS"),c("210 min +\n 0.1 mM IPTG","210 min"),c("210 min +\n 0.1 mM IPTG","0 min +\n 0.1 mM IPTG"), 
                                  c("0 min","0 min +\n 0.1 mM IPTG"), c("0 min","210 min")),
-              annotations=c("N.S","N.S","****","****"),
-              y_position = c(1.8,2,2.4,2.2),
+              annotations=c("****","****","N.S","N.S","****","****"),
+              y_position = c(1.8,1.6,2,2.2,2.6,2.4),
               tip_length = 0.03,
               map_signif_level = TRUE, color= "black",textsize=8,size=1)
 
@@ -408,7 +410,7 @@ lppr <- ggplot(data_long, aes(x = Condition, y = Width, fill = Condition, color=
 print(lppr) 
 
 
-ggsave("LPPr_Violin_plot_width.png", plot=lppr, width=10,height= 10)
+ggsave("LPPrpriwis_Violin_plot_width.png", plot=lppr, width=10,height= 10)
 
 
 
@@ -485,22 +487,24 @@ ggsave("BW_Violin_plot_width.png", plot=bw, width=10,height= 10)
 ##################################################################################################################
 
 data_long <- alldata %>%
-  pivot_longer(cols = c(bw330ir, bw330uir, bw120ir, bw120uir),
+  pivot_longer(cols = c(bw330ir, bw330uir, bw120ir, bw120uir,bwpriwis),
                names_to = "Condition",
                values_to = "Width")
 
 
 data_long$Condition <- factor(data_long$Condition,
-                              levels = c("bw330ir", "bw330uir", "bw120ir", "bw120uir"),
-                              labels = c("210 min +\n 0.1 mM IPTG", "210 min", "0 min +\n 0.1 mM IPTG", "0 min"))
+                              levels = c("bwpriwis","bw330ir", "bw330uir", "bw120ir", "bw120uir"),
+                              labels = c("PRIWIS","210 min +\n 0.1 mM IPTG", "210 min", "0 min +\n 0.1 mM IPTG", "0 min"))
 
 
 custo_colors <- c("210 min +\n 0.1 mM IPTG" = "#00a393",
                   "210 min"        = "#de0286",
+                  "PRIWIS" = "#6c32ad",
                   "0 min +\n 0.1 mM IPTG"  = "#00a393",
                   "0 min"         = "#de0286")
 custocolors <- c("210 min +\n 0.1 mM IPTG" = "#007367",
                  "210 min"        = "#8a0053",
+                 "PRIWIS"="#400d7a",
                  "0 min +\n 0.1 mM IPTG"  = "#007367",
                  "0 min"         = "#8a0053")
 
@@ -514,7 +518,7 @@ bwr <- ggplot(data_long, aes(x = Condition, y = Width, fill = Condition, color= 
   stat_summary(fun = mean, geom = "point", shape = 21, size = 5, fill = "black") +
   scale_fill_manual(values = custocolors) +
   scale_color_manual(values=custo_colors)+
-  coord_cartesian(ylim=c(0,2.6))+
+  coord_cartesian(ylim=c(0,2.8))+
   
   theme_bw(base_size = 24) +
   theme(legend.position = "none",
@@ -532,10 +536,10 @@ bwr <- ggplot(data_long, aes(x = Condition, y = Width, fill = Condition, color= 
   labs(title = expression(bold("BW25113"~bolditalic(" + secA E. coli")~" widths")),
        x = "   ",
        y ="Width (µm)")+
-  geom_signif(comparisons = list(c("210 min +\n 0.1 mM IPTG","210 min"),c("210 min +\n 0.1 mM IPTG","0 min +\n 0.1 mM IPTG"),
+  geom_signif(comparisons = list(c("PRIWIS","210 min"),c("210 min +\n 0.1 mM IPTG","PRIWIS"),c("210 min +\n 0.1 mM IPTG","210 min"),c("210 min +\n 0.1 mM IPTG","0 min +\n 0.1 mM IPTG"), 
                                  c("0 min","0 min +\n 0.1 mM IPTG"), c("0 min","210 min")),
-              annotations=c("N.S","****","N.S","****"),
-              y_position = c(1.8,2,2.4,2.2),
+              annotations=c("****","N.S","N.S","****","N.S","****"),
+              y_position = c(1.8,1.6,2,2.2,2.6,2.4),
               tip_length = 0.03,
               map_signif_level = TRUE, color= "black",textsize=8,size=1)
 
@@ -544,4 +548,4 @@ bwr <- ggplot(data_long, aes(x = Condition, y = Width, fill = Condition, color= 
 print(bwr)
 
 
-ggsave("bwr_Violin_plot_width.png", plot=bwr, width=10,height= 10)
+ggsave("bwrpriwis_Violin_plot_width.png", plot=bwr, width=10,height= 10)
