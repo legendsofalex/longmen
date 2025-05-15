@@ -95,6 +95,31 @@ print(rfacui$p.value)
 #####################################
 cd<-cliff.delta(rfac90ui,rfac300ui)
 print(cd)
+#########################
+#######300 i vs PRIWIS rfac#####
+#########################
+rfac300ui<-na.omit(alldata$rfac300ui)
+rfac300i<-na.omit(alldata$rfac300i)
+rfacpriwis<-na.omit(alldata$rfacpriwis)
+rfacpriwis<-wilcox.test(alldata$"rfacpriwis",alldata$"rfac300i",
+                        alternative = "two.sided", paired = FALSE,
+                        exact = FALSE, correct = FALSE)
+print(rfacpriwis$p.value)
+#################################
+
+cd<-cliff.delta(rfacpriwis,rfac300i)
+print(cd)
+#########################
+#######300 ui vs PRIWIS rfac#####
+#########################
+rfacpriwis<-wilcox.test(alldata$"rfacpriwis",alldata$"rfac300ui",
+                        alternative = "two.sided", paired = FALSE,
+                        exact = FALSE, correct = FALSE)
+print(rfacpriwis$p.value)
+#################################
+
+cd<-cliff.delta(rfacpriwis,rfac300ui)
+print(cd)
 
 ##################################################################################
 ########################## O-Antigen restored grow up 3 ##########################
@@ -147,9 +172,34 @@ print(oarui$p.value)
 #################################
 cd<-cliff.delta(oar90ui,oar300ui)
 print(cd)
-######################################
-#######300iv300 ui oar grow up 2######
-######################################
+#########################
+#######300 i vs PRIWIS oar#####
+#########################
+oar300ui<-na.omit(alldata$oar300ui)
+oar300i<-na.omit(alldata$oar300i)
+oarpriwis<-na.omit(alldata$oarpriwis)
+oarpriwis<-wilcox.test(alldata$"oarpriwis",alldata$"oar300i",
+                       alternative = "two.sided", paired = FALSE,
+                       exact = FALSE, correct = FALSE)
+print(oaripriwis$p.value)
+#################################
+
+cd<-cliff.delta(oarpriwis,oar300i)
+print(cd)
+#########################
+#######300 ui vs PRIWIS oar#####
+#########################
+oaripriwis<-wilcox.test(alldata$"oarpriwis",alldata$"oar300ui",
+                        alternative = "two.sided", paired = FALSE,
+                        exact = FALSE, correct = FALSE)
+print(oaripriwis$p.value)
+#################################
+
+cd<-cliff.delta(oarpriwis,oar300ui)
+print(cd)
+##################################################################################
+################300iv300 ui oar grow up 2#########################################
+##################################################################################
 oar2ui<-na.omit(alldata$oar300ui2)
 oar2i<-na.omit(alldata$oar300i2)
 oarui<-wilcox.test(alldata$"oar300ui2",alldata$"oar300i2",
@@ -159,6 +209,7 @@ print(oarui$p.value)
 ###############################
 cd<-cliff.delta(oar2i,oar2ui)
 print(cd)
+
 ##################################################################################
 ###################### Brauns lipoprotein deficient grow up 1 ####################
 ##################################################################################

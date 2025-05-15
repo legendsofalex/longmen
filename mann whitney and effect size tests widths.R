@@ -29,7 +29,8 @@ shapiro.test(alldata$lpp300ui3)#not normal
 shapiro.test(alldata$lpp90i3)#not normal
 shapiro.test(alldata$lpp90ui3)#not normal
 shapiro.test(alldata$lpppriwis)#not normal
-
+shapiro.test(alldata$oarpriwis)#not normal
+shapiro.test(alldata$rfacpriwis)#not normal
 ###################################################################################
 ###################################~~RfaC grow 3~~#################################
 ###################################################################################
@@ -92,6 +93,31 @@ print(rfacui$p.value)
 #########################
 cd<-cliff.delta(rfac120ui,rfac300ui)
 print(cd)
+#########################
+#######300 i vs PRIWIS rfac#####
+#########################
+rfac300ui<-na.omit(alldata$rfac300ui)
+rfac300i<-na.omit(alldata$rfac300i)
+rfacpriwis<-na.omit(alldata$rfacpriwis)
+rfacpriwis<-wilcox.test(alldata$"rfacpriwis",alldata$"rfac300i",
+                       alternative = "two.sided", paired = FALSE,
+                       exact = FALSE, correct = FALSE)
+print(rfacpriwis$p.value)
+#################################
+
+cd<-cliff.delta(rfacpriwis,rfac300i)
+print(cd)
+#########################
+#######300 ui vs PRIWIS rfac#####
+#########################
+rfacpriwis<-wilcox.test(alldata$"rfacpriwis",alldata$"rfac300ui",
+                        alternative = "two.sided", paired = FALSE,
+                        exact = FALSE, correct = FALSE)
+print(rfacpriwis$p.value)
+#################################
+
+cd<-cliff.delta(rfacpriwis,rfac300ui)
+print(cd)
 
 ##################################################################################
 ################################~~OAR grow up 3~~#################################
@@ -143,6 +169,31 @@ oarui<-wilcox.test(alldata$"oar90ui",alldata$"oar300ui",
 print(oarui$p.value)
 ###############################
 cd<-cliff.delta(oar90ui,oar300ui)
+print(cd)
+#########################
+#######300 i vs PRIWIS oar#####
+#########################
+oar300ui<-na.omit(alldata$oar300ui)
+oar300i<-na.omit(alldata$oar300i)
+oarpriwis<-na.omit(alldata$oarpriwis)
+oarpriwis<-wilcox.test(alldata$"oarpriwis",alldata$"oar300i",
+                       alternative = "two.sided", paired = FALSE,
+                       exact = FALSE, correct = FALSE)
+print(oaripriwis$p.value)
+#################################
+
+cd<-cliff.delta(oarpriwis,oar300i)
+print(cd)
+#########################
+#######300 ui vs PRIWIS oar#####
+#########################
+oaripriwis<-wilcox.test(alldata$"oarpriwis",alldata$"oar300ui",
+                        alternative = "two.sided", paired = FALSE,
+                        exact = FALSE, correct = FALSE)
+print(oaripriwis$p.value)
+#################################
+
+cd<-cliff.delta(oarpriwis,oar300ui)
 print(cd)
 ######################################
 #######300iv300 ui oar grow up 2######

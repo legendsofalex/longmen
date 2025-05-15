@@ -5,7 +5,8 @@ library(ggsignif)
 library(ggforce)##load in packages
 
 
-alldata <- read_excel("all widths.xlsx")###read in appropriately layed out excel file
+alldata <- read_excel("all widths.xlsx")###read in appropriately laid out excel file
+#priwis is its own category of data (post re-inoculation with induced sample)
 ###################################################################################################################################
 ###################################################################################################################################
 ###################################################################################################################################
@@ -15,22 +16,24 @@ alldata <- read_excel("all widths.xlsx")###read in appropriately layed out excel
 ###################################################################################################################################
 # Reshape data from wide to long format for O-Antigen restored columns
 data_long <- alldata %>%
-  pivot_longer(cols = c(oar300i, oar300ui, oar90i, oar90ui),
+  pivot_longer(cols = c(oar300i, oar300ui, oar90i, oar90ui,oarpriwis),
                names_to = "Condition",
                values_to = "Width")
 # Convert condition names to more informative factor levels (with line breaks for display)
 
 data_long$Condition <- factor(data_long$Condition,
-                              levels = c("oar300i", "oar300ui", "oar90i", "oar90ui"),
-                              labels = c("210 min +\n 0.1 mM IPTG", "210 min", "0 min +\n 0.1 mM IPTG", "0 min")
+                              levels = c("oarpriwis","oar300i", "oar300ui", "oar90i", "oar90ui"),
+                              labels = c("PRIWIS","210 min +\n 0.1 mM IPTG", "210 min", "0 min +\n 0.1 mM IPTG", "0 min"))
 
-# Define custom fill and outline colors for plot
-customcolors <- c("210 min +\n 0.1 mM IPTG" = "#00a393",
-                  "210 min"        = "#de0286",
-                  "0 min +\n 0.1 mM IPTG"  = "#00a393",
-                  "0 min"         = "#de0286")
-custom_colors <- c("210 min +\n 0.1 mM IPTG" = "#007367",
+#set colours for fill and outline
+customcolours  <- c("210 min +\n 0.1 mM IPTG" = "#00a393",
+                   "210 min"        = "#de0286",
+                   "PRIWIS"= "#6625b0",
+                   "0 min +\n 0.1 mM IPTG"  = "#00a393",
+                   "0 min"         = "#de0286")
+custom_colours <- c("210 min +\n 0.1 mM IPTG" = "#007367",
                    "210 min"        = "#8a0053",
+                   "PRIWIS" ="#400d7a",
                    "0 min +\n 0.1 mM IPTG"  = "#007367",
                    "0 min"         = "#8a0053")
 # Create the plot for O-Antigen restored samples
@@ -42,9 +45,9 @@ OAR <- ggplot(data_long, aes(x = Condition, y = Width, fill = Condition, color= 
   stat_summary(fun.data = mean_sdl, fun.args = list(mult = 1),
                geom = "errorbar", width=0.1, color= "black", size= 2) +
   stat_summary(fun = mean, geom = "point", shape = 21, size = 5, fill = "black") +
-  scale_fill_manual(values = custom_colors) +
-  scale_color_manual(values=customcolors)+
-  coord_cartesian(ylim=c(0,2.6))+
+  scale_fill_manual(values = custom_colours) +
+  scale_color_manual(values=customcolours)+
+  coord_cartesian(ylim=c(0,2.8))+
   
   # Apply plot themes and style   
   
@@ -66,17 +69,17 @@ OAR <- ggplot(data_long, aes(x = Condition, y = Width, fill = Condition, color= 
        x = "   ",
        y ="Width (µm)")+
 # Add statistical comparisons between groups with custom annotations, generated from mann-whitney U-test files
-  geom_signif(comparisons = list(c("210 min +\n 0.1 mM IPTG","210 min"),c("210 min +\n 0.1 mM IPTG","0 min +\n 0.1 mM IPTG"), 
+  geom_signif(comparisons = list(c("PRIWIS","210 min"),c("210 min +\n 0.1 mM IPTG","PRIWIS"),c("210 min +\n 0.1 mM IPTG","210 min"),c("210 min +\n 0.1 mM IPTG","0 min +\n 0.1 mM IPTG"), 
                                  c("0 min","0 min +\n 0.1 mM IPTG"), c("0 min","210 min")),
-              annotations=c("****","N.S","****","****"),
-              y_position = c(1.8,2,2.4,2.2),
+              annotations=c("****","****","****","N.S","****","****"),
+              y_position = c(1.8,1.6,2,2.2,2.6,2.4),
               tip_length = 0.03,
               map_signif_level = TRUE, color= "black",textsize=8,size=1)
 
 #display the plot
 print(OAR) 
 #save the plot as a PNG
-ggsave("OAR_Violin_plot_width.png", plot=OAR, width=10,height= 10)
+ggsave("OARpriwis_Violin_plot_width.png", plot=OAR, width=10,height= 10)
 ###################################################################################################################################
 ###################################################################################################################################
 ###################################################################################################################################
@@ -86,21 +89,23 @@ ggsave("OAR_Violin_plot_width.png", plot=OAR, width=10,height= 10)
 ###################################################################################################################################
 
 datalong <- alldata %>%
-  pivot_longer(cols = c(rfac300i, rfac300ui, rfac90i, rfac90ui),
+  pivot_longer(cols = c(rfac300i, rfac300ui, rfac90i, rfac90ui,rfacpriwis),
                names_to = "Condition",
                values_to = "Width")
 
 datalong$Condition <- factor(datalong$Condition,
-                             levels = c("rfac300i", "rfac300ui", "rfac90i", "rfac90ui"),
-                             labels = c("210 min +\n 0.1 mM IPTG", "210 min", "0 min +\n 0.1 mM IPTG", "0 min"))
+                             levels = c("rfacpriwis","rfac300i", "rfac300ui", "rfac90i", "rfac90ui"),
+                             labels = c("PRIWIS","210 min +\n 0.1 mM IPTG", "210 min", "0 min +\n 0.1 mM IPTG", "0 min"))
 
 
-custom___colors <- c("210 min +\n 0.1 mM IPTG" = "#00a393",
+custom___colours <- c("210 min +\n 0.1 mM IPTG" = "#00a393",
                      "210 min"        = "#de0286",
+                     "PRIWIS"= "#6625b0",
                      "0 min +\n 0.1 mM IPTG"  = "#00a393",
                      "0 min"         = "#de0286")
-custom__colors <- c("210 min +\n 0.1 mM IPTG" = "#007367",
+custom__colours <- c("210 min +\n 0.1 mM IPTG" = "#007367",
                     "210 min"        = "#8a0053",
+                    "PRIWIS" ="#400d7a",
                     "0 min +\n 0.1 mM IPTG"  = "#007367",
                     "0 min"         = "#8a0053")
 
@@ -110,9 +115,9 @@ rfac <- ggplot(datalong, aes(x = Condition, y = Width, fill = Condition, color= 
   stat_summary(fun.data = mean_sdl, fun.args = list(mult = 1),
                geom = "errorbar", width=0.1, color= "black", size= 2) +
   stat_summary(fun = mean, geom = "point", shape = 21, size = 5, fill = "black") +
-  scale_fill_manual(values = custom__colors) +
-  scale_color_manual(values=custom___colors)+
-  coord_cartesian(ylim=c(0,2.6))+
+  scale_fill_manual(values = custom__colours) +
+  scale_color_manual(values=custom___colours)+
+  coord_cartesian(ylim=c(0,2.8))+
   
   
   theme_bw(base_size = 24) +
@@ -131,10 +136,10 @@ rfac <- ggplot(datalong, aes(x = Condition, y = Width, fill = Condition, color= 
   labs(title = expression(bold(bolditalic("∆rfaC + secA E. coli")~" widths")),
        x = "   ",
        y ="Width (µm)")+
-  geom_signif(comparisons = list(c("210 min +\n 0.1 mM IPTG","210 min"),c("210 min +\n 0.1 mM IPTG","0 min +\n 0.1 mM IPTG"), 
+  geom_signif(comparisons = list(c("PRIWIS","210 min"),c("210 min +\n 0.1 mM IPTG","PRIWIS"),c("210 min +\n 0.1 mM IPTG","210 min"),c("210 min +\n 0.1 mM IPTG","0 min +\n 0.1 mM IPTG"), 
                                  c("0 min","0 min +\n 0.1 mM IPTG"), c("0 min","210 min")),
-              annotations=c("N.S","**","****","***"),
-              y_position = c(1.8,2,2.4,2.2),
+              annotations=c("****","****","N.S","**","****","***"),
+              y_position = c(1.8,1.6,2,2.2,2.6,2.4),
               tip_length = 0.03,
               map_signif_level = TRUE, color= "black",textsize=8,size=1)
 
@@ -142,7 +147,7 @@ rfac <- ggplot(datalong, aes(x = Condition, y = Width, fill = Condition, color= 
 print(rfac) 
 
 
-ggsave("RFAC_Violin_plot_width.png", plot=rfac, width=10,height= 10)
+ggsave("RFACpriwis_Violin_plot_width.png", plot=rfac, width=10,height= 10)
 ###################################################################################################################################
 ###################################################################################################################################
 ###################################################################################################################################
@@ -161,11 +166,11 @@ data_long$Condition <- factor(data_long$Condition,
                               labels = c("300 min +\n 0.1 mM IPTG", "300 min", "90 min +\n 0.1 mM IPTG", "90 min"))
 
 
-custo_colors <- c("300 min +\n 0.1 mM IPTG" = "#00a393",
+custo_colours <- c("300 min +\n 0.1 mM IPTG" = "#00a393",
                   "300 min"        = "#de0286",
                   "90 min +\n 0.1 mM IPTG"  = "#00a393",
                   "90 min"         = "#de0286")
-custocolors <- c("300 min +\n 0.1 mM IPTG" = "#007367",
+custocolours <- c("300 min +\n 0.1 mM IPTG" = "#007367",
                  "300 min"        = "#8a0053",
                  "90 min +\n 0.1 mM IPTG"  = "#007367",
                  "90 min"         = "#8a0053")
@@ -177,8 +182,8 @@ lpp <- ggplot(data_long, aes(x = Condition, y = Width, fill = Condition, color= 
   stat_summary(fun.data = mean_sdl, fun.args = list(mult = 1),
                geom = "errorbar", width=0.1, color= "black", size= 2) +
   stat_summary(fun = mean, geom = "point", shape = 21, size = 5, fill = "black") +
-  scale_fill_manual(values = custocolors) +
-  scale_color_manual(values=custo_colors)+
+  scale_fill_manual(values = custocolours) +
+  scale_color_manual(values=custo_colours)+
   coord_cartesian(ylim=c(0,2.6))+
   
   theme_bw(base_size = 24) +
@@ -294,11 +299,11 @@ data_long$Condition <- factor(data_long$Condition,
                               labels = c("300 min +\n 0.1 mM IPTG", "300 min", "90 min +\n 0.1 mM IPTG", "90 min"))
 
 
-custo_colors <- c("300 min +\n 0.1 mM IPTG" = "#00a393",
+custo_colours <- c("300 min +\n 0.1 mM IPTG" = "#00a393",
                   "300 min"        = "#de0286",
                   "90 min +\n 0.1 mM IPTG"  = "#00a393",
                   "90 min"         = "#de0286")
-custocolors <- c("300 min +\n 0.1 mM IPTG" = "#007367",
+custocolours <- c("300 min +\n 0.1 mM IPTG" = "#007367",
                  "300 min"        = "#8a0053",
                  "90 min +\n 0.1 mM IPTG"  = "#007367",
                  "90 min"         = "#8a0053")
@@ -310,8 +315,8 @@ lpp3 <- ggplot(data_long, aes(x = Condition, y = Width, fill = Condition, color=
   stat_summary(fun.data = mean_sdl, fun.args = list(mult = 1),
                geom = "errorbar", width=0.1, color= "black", size= 2) +
   stat_summary(fun = mean, geom = "point", shape = 21, size = 5, fill = "black") +
-  scale_fill_manual(values = custocolors) +
-  scale_color_manual(values=custo_colors)+
+  scale_fill_manual(values = custocolours) +
+  scale_color_manual(values=custo_colours)+
   coord_cartesian(ylim=c(0,2.6))+
   
   theme_bw(base_size = 24) +
@@ -360,12 +365,12 @@ data_long$Condition <- factor(data_long$Condition,
                               labels = c("PRIWIS","210 min +\n 0.1 mM IPTG", "210 min", "0 min +\n 0.1 mM IPTG", "0 min"))
 
 
-custo_colors <- c("210 min +\n 0.1 mM IPTG" = "#00a393",
+custo_colours <- c("210 min +\n 0.1 mM IPTG" = "#00a393",
                   "210 min"        = "#de0286",
                   "PRIWIS" = "#6c32ad",
                   "0 min +\n 0.1 mM IPTG"  = "#00a393",
                   "0 min"         = "#de0286")
-custocolors <- c("210 min +\n 0.1 mM IPTG" = "#007367",
+custocolours <- c("210 min +\n 0.1 mM IPTG" = "#007367",
                  "210 min"        = "#8a0053",
                  "PRIWIS"="#400d7a",
                  "0 min +\n 0.1 mM IPTG"  = "#007367",
@@ -379,8 +384,8 @@ lppr <- ggplot(data_long, aes(x = Condition, y = Width, fill = Condition, color=
   stat_summary(fun.data = mean_sdl, fun.args = list(mult = 1),
                geom = "errorbar", width=0.1, color= "black", size= 2) +
   stat_summary(fun = mean, geom = "point", shape = 21, size = 5, fill = "black") +
-  scale_fill_manual(values = custocolors) +
-  scale_color_manual(values=custo_colors)+
+  scale_fill_manual(values = custocolours) +
+  scale_color_manual(values=custo_colours)+
   coord_cartesian(ylim=c(0,2.8))+
   
   theme_bw(base_size = 24) +
@@ -497,12 +502,12 @@ data_long$Condition <- factor(data_long$Condition,
                               labels = c("PRIWIS","210 min +\n 0.1 mM IPTG", "210 min", "0 min +\n 0.1 mM IPTG", "0 min"))
 
 
-custo_colors <- c("210 min +\n 0.1 mM IPTG" = "#00a393",
+custo_colours <- c("210 min +\n 0.1 mM IPTG" = "#00a393",
                   "210 min"        = "#de0286",
                   "PRIWIS" = "#6c32ad",
                   "0 min +\n 0.1 mM IPTG"  = "#00a393",
                   "0 min"         = "#de0286")
-custocolors <- c("210 min +\n 0.1 mM IPTG" = "#007367",
+custocolours <- c("210 min +\n 0.1 mM IPTG" = "#007367",
                  "210 min"        = "#8a0053",
                  "PRIWIS"="#400d7a",
                  "0 min +\n 0.1 mM IPTG"  = "#007367",
@@ -516,8 +521,8 @@ bwr <- ggplot(data_long, aes(x = Condition, y = Width, fill = Condition, color= 
   stat_summary(fun.data = mean_sdl, fun.args = list(mult = 1),
                geom = "errorbar", width=0.1, color= "black", size= 2) +
   stat_summary(fun = mean, geom = "point", shape = 21, size = 5, fill = "black") +
-  scale_fill_manual(values = custocolors) +
-  scale_color_manual(values=custo_colors)+
+  scale_fill_manual(values = custocolours) +
+  scale_color_manual(values=custo_colours)+
   coord_cartesian(ylim=c(0,2.8))+
   
   theme_bw(base_size = 24) +

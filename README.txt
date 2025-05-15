@@ -83,5 +83,5 @@ further information in using the scripts can be found within the file
 itself.
 ######################### Credits ##############################
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Data was collected in collaboration with Dr Christoph G. Baumann
+Data was collected under supervision of Dr Christoph G. Baumann
 at The University of York
