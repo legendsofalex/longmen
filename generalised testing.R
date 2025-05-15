@@ -61,4 +61,6 @@ shapiro.test(alldata$lpp90i3)#not normal
 shapiro.test(alldata$lpp90ui3)#not normal
 shapiro.test(alldata$lpppriwis)#not normal, not normal
 shapiro.test(alldata$bwpriwis)#not normal, not normal
+shapiro.test(alldata$oarpriwis)#not normal, not normal
+shapiro.test(alldata$rfacpriwis)#not normal, not normal
 
